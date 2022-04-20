@@ -1,0 +1,348 @@
+%
+% 6.006 problem set 1 solutions template
+%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% See below for common and useful latex constructs. %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Some useful commands:
+%$f(x) = \Theta(x)$
+%$T(x, y) \leq \log(x) + 2^y + \binom{2n}{n}$
+% {\tt code\_function}
+
+
+% You can create unnumbered lists as follows:
+%\begin{itemize}
+%    \item First item in a list
+%        \begin{itemize}
+%            \item First item in a list
+%                \begin{itemize}
+%                    \item First item in a list
+%                    \item Second item in a list
+%                \end{itemize}
+%            \item Second item in a list
+%        \end{itemize}
+%    \item Second item in a list
+%\end{itemize}
+
+% You can create numbered lists as follows:
+%\begin{enumerate}
+%    \item First item in a list
+%    \item Second item in a list
+%    \item Third item in a list
+%\end{enumerate}
+
+% You can write aligned equations as follows:
+%\begin{align}
+%    \begin{split}
+%        (x+y)^3 &= (x+y)^2(x+y) \\
+%                &= (x^2+2xy+y^2)(x+y) \\
+%                &= (x^3+2x^2y+xy^2) + (x^2y+2xy^2+y^3) \\
+%                &= x^3+3x^2y+3xy^2+y^3
+%    \end{split}
+%\end{align}
+
+% You can create grids/matrices as follows:
+%\begin{align}
+%    A =
+%    \begin{bmatrix}
+%        A_{11} & A_{21} \\
+%        A_{21} & A_{22}
+%    \end{bmatrix}
+%\end{align}
+
+% You can include images and PDFs as follows:
+% \includegraphics[width=0.5\textwidth]{img.jpg}
+
+\documentclass[12pt,twoside]{article}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=false,
+  tabsize=3
+}
+\input{macros-sp20}
+\newcommand{\theproblemsetnum}{1}
+
+\title{6.006 Problem Set 1}
+
+\begin{document}
+
+\handout{Problem Set \theproblemsetnum}
+{\bf Name:} Asem Ashraf
+
+\medskip
+
+%{\bf Collaborators:} Name1, Name2
+
+\medskip\hrulefill
+
+\begin{problems}
+
+
+\problem  % Problem 1
+
+\begin{problemparts}
+\problempart % Problem 1a
+	($f_5,f_3, f_4,f_1,f_2$)
+\problempart % Problem 1b
+	($f_1,f_2, f_5,f_4,f_3$)
+\problempart % Problem 1c
+	($\{f_2,f_5\}, f_4,f_1,f_3$)
+\problempart % Problem 1d
+	($f_5,f_2, f_1,f_3,f_4$)
+
+\end{problemparts}
+\medskip
+\problem  % Problem 2
+
+\begin{problemparts}
+\problempart % Problem 2a
+	{We go through deleting and storing the $(i+m)^{th}$ and $(i+k-m-1)^{th}$ item in two separate variables, Where $m$ starts from $0$ and goes up to $k/2-1$. Then reverse their order in the sequence when inserting them back in. This used 4 O(logn) operations at most $k/2$ times which makes the total complexity O($k.$logn).}\\
+	This is the procedural version of solving this algorithm. There is also a recursive solution.
+	
+\begin{lstlisting}
+for m in range (k/2):
+		Front_var = D.delete_at(i+m)        #O(logn)
+		End_var   = D.delete_at(i+k-m-1)    #O(logn)
+		D.insert_at(i,End_var)            #O(logn)
+		D.insert_at(i+k-1-m,Front_var)    #O(logn)
+\end{lstlisting}
+	
+
+	
+\problempart % Problem 2b
+%this is more like pesuaducode rather than an actuall code. Is it enough?
+i dont know how to do this
+So, apparently you overwrite the items in front of j to move the k items in front of i.
+	We go through this by deleting the item at index i, and storing it in j+1
+m = 0
+\\delete the item at i+m and save it
+\\delete the item at j+m and save it
+\\swap them
+\\add 1 to m
+\\then repeat
+
+\end{problemparts}
+
+
+
+\newpage
+\problem  % Problem 3
+this can only be implemented in a dynamic array because we want to move\_page(m) in O(1) which can only be done in amortized time. We did not use linked list however because we want the reading time to be O(1) and that cant be achieved even amortized in a linked list.
+the question is, how are we gonna insert in the middle of an array in a O(1) amortized time?
+
+\newpage
+
+\problem  % Problem 4
+
+\begin{problemparts}
+\problempart % Problem 4a
+
+\begin{itemize}
+
+    \item insert\_first(x)
+        \begin{itemize}
+
+            \item create a new doubly linked node storing x.
+            \item if the doubly linked list is empty, then link both the head and tail to point to the new node.
+			\item Otherwise, assign the head of the list to the next-node pointer in the that new node.
+			\item assign the new head to previous-node pointer in the old-head node.
+			\item update the list head pointer to point to the new head.
+
+        \end{itemize}
+
+    \item insert\_last(x):
+    		\begin{itemize}
+
+			\item create a new doubly linked node storing x.
+			\item if the doubly linked list is empty, then link both the head and tail to point to the new node.
+			\item Otherwise, assign the tail of the list to the previous-node pointer in the that new node.
+			\item assign the new tail to the next-node pointer in the old-tail node .
+			\item update the list tail pointer to point to the new tail.
+
+          \end{itemize}
+          
+     \item delete\_first():
+        \begin{itemize}
+			\item if the next-node pointer of the head node is set to None, then there is no other nodes in the list, hence the tail node is assigned None
+			\item if there is more than 1 node in the list, then assign the next-node pointer as the list's head node.
+			\item assign the previous-node pointer of the new head node to None
+        \end{itemize}
+
+   	 \item delete\_last():
+        \begin{itemize}
+			\item if the previous-node pointer of the tail node is set to None, then there is no other nodes in the list, hence the head node is assigned None
+			\item if there is more than 1 node in the list, then assign the next-node pointer to the list's tail node.
+			\item assign the next-node pointer of the new tail node to None
+        \end{itemize}
+
+\end{itemize}
+
+\newpage
+
+\problempart % Problem 4b
+\begin{itemize}
+\item Create a new doubly linked list in O(1) time, and assign $x_1$ to its head and $x_2$ to its tail.
+\item If $x_1$ is the head of the first list, assign the node after $x_2$ to be the head of the original list. And set the previous-node pointer in that node to be None.
+\item Otherwise, assign $x_2$ to the next-node pointer in node preceding node $x_1$.
+\item If $x_2$ is the tail of the first list, assign the node before $x_1$ to be the tail of the original list.
+\item Otherwise, assign the node preceding $x_1$ to the previous-node pointer in node succeeding node $x_2$.
+\item Assign the previous-node pointer of $x_1$ to null.
+\item Assign the next-node pointer of $x_2$ to null.
+\item Return the new doubly linked list.
+\end{itemize}
+\medskip
+\problempart % Problem 4c
+
+\begin{itemize}
+
+\item Save the x.next pointer in a variable x\_next = x.next.
+\item Assign the previous-node pointer of the head pointer of $L_2$ to the x.next pointer.
+\item Assign x.next previous-node pointer to $L_2$ tail next-node pointer.
+\item Set $L_2$ tail pointer to null.
+\item Set $L_2$ head pointer to null.
+\end{itemize}
+\medskip
+\problempart 
+\begin{lstlisting}
+class Doubly_Linked_List_Node:
+    def __init__(self, x):
+        self.item = x
+        self.prev = None
+        self.next = None
+
+    def later_node(self, i):
+        if i == 0: return self
+        assert self.next
+        return self.next.later_node(i - 1)
+
+class Doubly_Linked_List_Seq:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+
+    def __iter__(self):
+        node = self.head
+        while node:
+            yield node.item
+            node = node.next
+
+    def __str__(self):
+        return '-'.join([('(%s)' % x) for x in self])
+
+    def build(self, X):
+        for a in X:
+            self.insert_last(a)
+
+    def get_at(self, i):
+        node = self.head.later_node(i)
+        return node.item
+
+    def set_at(self, i, x):
+        node = self.head.later_node(i)
+        node.item = x
+
+    def insert_first(self, x):
+        newnode = Doubly_Linked_List_Node(x)
+        if self.head==None:
+            self.head=newnode
+            self.tail=newnode
+            return
+        newnode.next=self.head
+        self.head.prev=newnode
+        self.head=newnode
+
+    def insert_last(self, x):
+        newnode = Doubly_Linked_List_Node(x)
+        if self.tail==None:
+            self.head=newnode
+            self.tail=newnode
+            return
+
+        newnode.prev = self.tail
+        self.tail.next = newnode
+        self.tail=newnode
+    def delete_first(self):
+        if self.head.next == None:
+            ans=self.head
+            self.tail=None
+            self.head=None
+            return ans
+        ans=self.head
+        self.head=self.head.next
+        self.head.prev=None
+        return ans.item
+
+    def delete_last(self):
+        if self.tail.prev == None:
+            ans=self.tail
+            self.tail = None
+            self.head = None
+            return ans
+        ans = self.tail
+        self.tail = self.tail.prev
+        self.tail.next = None
+        return ans.item
+
+    def remove(self, x1, x2):
+        L2 = Doubly_Linked_List_Seq()
+        L2.head=x1
+        L2.tail=x2
+        if self.head==x1:
+            self.head=x2.next
+            x2.next.prev=None
+        else:
+            x1.prev.next=x2.next #this assumes that x2 is not the tail of the list
+        if self.tail==x2:
+            self.tail=x1.prev
+            x1.next.prev=None
+        else:
+            x2.next.prev=x1.prev #this assumes that x1 is not the head of the list
+        x1.prev=None
+        x2.next=None
+        return L2
+
+    def splice(self, x, L2):
+        if L2.head==None and L2.tail==None: # if L2 is empty
+            return
+        if x.next==None: # if x is the last node in self
+            L2.head.prev=self.tail
+            self.tail.next=L2.head
+            self.tail=L2.tail
+            L2.tail=None
+            L2.head=None
+            return
+        x.next.prev=L2.tail
+        L2.tail.next = x.next
+        x.next = L2.head
+        L2.head.prev = x
+        L2.head=None
+        L2.tail=None
+
+
+\end{lstlisting}
+Test passed: 5 out of 5 tests - $225ms$
+\end{problemparts}
+
+\end{problems}
+
+\end{document}
