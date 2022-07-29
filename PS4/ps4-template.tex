@@ -8,18 +8,23 @@
 
 \title{6.006 Problem Set \theproblemsetnum}
 
+\usepackage{tikz-qtree}
 \begin{document}
-
-\handout{Problem Set \theproblemsetnum}
-
+\tikzset{every tree node/.style={minimum width=2em,draw,circle},
+         blank/.style={draw=none},
+         edge from parent/.style=
+         {draw,edge from parent path={(\tikzparentnode) -- (\tikzchildnode)}},
+         level distance=1.5cm}
+         
+         
 \setlength{\parindent}{0pt}
 \medskip\hrulefill\medskip
 
-{\bf Name:} Your Name
+{\bf Name:} Asem Ashraf
 
 \medskip
 
-{\bf Collaborators:} Name1, Name2
+{\bf Collaborators:} None
 
 \medskip\hrulefill
 
@@ -82,9 +87,217 @@
 
 \begin{problemparts}
 \problempart % Problem 1a
+
+\begin{itemize}
+    \item 47 skew -1
+    \item 16 skew 2
+    \item 37 skew -1
+    \item 64 skew -1
+    \item 86 skew 1
+\end{itemize}
+
 \problempart % Problem 1b
+
+
+\begin{itemize}
+    \item 
+    \item
+\begin{tikzpicture}
+\Tree
+[.47
+	[.16
+		[.3  
+			[.2
+			]
+		\edge[blank]; \node[blank]{};
+		]
+		[.37 
+			[.35
+				[.28
+				]
+			\edge[blank]; \node[blank]{};
+			]
+		\edge[blank]; \node[blank]{};
+		]
+	]
+	[.84
+		[.64
+			[.49
+			]
+		\edge[blank]; \node[blank]{};
+		]
+		[.86
+		\edge[blank]; \node[blank]{};
+			[.88
+			]
+		]
+	]
+]
+
+		
+\end{tikzpicture}
+    \item 
+\begin{tikzpicture}
+\Tree
+[.47
+	[.16
+		[.3  
+			[.2
+			]
+		\edge[blank]; \node[blank]{};
+		]
+		[.37 
+			[.35
+				[.28
+				]
+			\edge[blank]; \node[blank]{};
+			]
+		\edge[blank]; \node[blank]{};
+		]
+	]
+	[.84
+		[.64
+		]
+		[.86
+		\edge[blank]; \node[blank]{};
+			[.88
+			]
+		]
+	]
+]
+
+		
+\end{tikzpicture}
+    \item 
+\begin{tikzpicture}
+\Tree
+[.47
+	[.16
+		[.3  
+			[.2
+			]
+		\edge[blank]; \node[blank]{};
+		]
+		[.37 
+			[.28
+				]
+			\edge[blank]; \node[blank]{};
+		]
+	]
+	[.84
+		[.64
+		]
+		[.86
+		\edge[blank]; \node[blank]{};
+			[.88
+			]
+		]
+	]
+]
+		
+\end{tikzpicture}
+    \item 
+\begin{tikzpicture}
+\Tree
+[.47
+	[.16
+		[.3  
+			[.2
+			]
+		\edge[blank]; \node[blank]{};
+		]
+		[.37 
+			[.28
+				]
+			\edge[blank]; \node[blank]{};
+		]
+	]
+	[.84
+		[.64
+		]
+		[.86
+			[.85
+			]
+			[.88
+			]
+		]
+	]
+]		
+\end{tikzpicture}
+
+    \item 
+\begin{tikzpicture}
+\Tree
+[.47
+	[.16
+		[.3  
+			[.2
+			]
+		\edge[blank]; \node[blank]{};
+		]
+		[.37 
+			[.28
+				]
+			\edge[blank]; \node[blank]{};
+		]
+	]
+	[.86
+		[.85
+			[.64
+			]
+			\edge[blank]; \node[blank]{};
+		]
+		[.88
+		]
+	]
+]		
+\end{tikzpicture}
+
+\end{itemize}
+
+\newpage
+
 \problempart % Problem 1c
+\begin{itemize}
+\item
+\item
+\begin{tikzpicture}
+\Tree
+[.47
+	[.16
+		[.3  
+		]
+		[.37 
+			[.35
+				[.28
+				]
+			\edge[blank]; \node[blank]{};
+			]
+		\edge[blank]; \node[blank]{};
+		]
+	]
+	[.84
+		[.64
+			[.49
+			]
+		\edge[blank]; \node[blank]{};
+		]
+		[.86
+		\edge[blank]; \node[blank]{};
+			[.88
+			]
+		]
+	]
+]
+
+
+\end{tikzpicture}
+\end{itemize}
+
 \end{problemparts}
+
+
+
 
 \newpage
 \problem  % Problem 2
@@ -106,9 +319,29 @@
 
 \newpage
 \problem  % Problem 4
+%can we reallt sort the binary tree in the travese order in logariithmic time or should we say AVL tree? we must say it is an AVL tree because it preserve the order of its elements in logarithmic time per insertions or deletions.
+Firstly, we will use a priority queue that is implemented using the max heap data structure, so we can have the build time be O(1). The priority queue will be build based on the available capacity of a solar plant. Every time we delete max out of the priority queue, we would be deleting the solar farm with the maximum available capacity.
+
+Secondly, we will have to build a set AVL tree keyed on the building names, and has at each node the demand of the building and a pointer to the solar farm powering it in the priority queue.
+
+In the priority queue, each solar farm will be pointing to 2 values. The available capacity and a list with all the building that it is powering.
+
+In this database we will use multiple AVL trees. The main AVL tree is the one keyed on the building's unique ID. The other AVL tree is keyed by the available capacity of the solar farm.
+
+
+
 
 \newpage
-\problem  % Problem 5
+\problem  % Problem 5 DONE
+
+The data structure in this problem will be a sequence AVL binary tree. At each there will be the matrix of that specific joint in the matrix along with the matrix multiplication of the left node's matrix with self matrix then with right node's matrix in this order. If this invariant is kept along the tree at each change in any matrix, the resultant matrix at the node(not the matrix of the node) would be the full transform.
+
+Intializing the sequence AVL tree would take O(n) to put each matrix in its node and calculating its resultant matrix. This is quite vague but this can be done in a specific way, from the bottom up to be done in O(n) time. Based on the number of n, the leaves of the tree could be specified and then building the tree from its leaves up.
+
+To update a joint, first we would have to find the node in O(logn), then update its matrix. Then we do 2 matrix multiplication of the the said matrices in O(1). Then go along the ancestors of that nodes updating the resultant matrix at each node in O(logn). Which evaluates to total run time of O(logn).
+
+If we kept all these invariant, then we will find the full transformation in the root resultant matrix.
+
 
 \newpage
 \problem  % Problem 6
